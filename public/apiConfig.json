@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "apis": {
+    "dashboard": {
+      "kpis": ["/getTotalContributions", "/getTotalContributions"]
+    },
+    "projectCreation": {
+      "createProject": ["/projects"]
+    }
+  }
+}
