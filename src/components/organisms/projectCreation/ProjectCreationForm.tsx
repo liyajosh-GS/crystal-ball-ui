@@ -43,9 +43,6 @@ const ProjectCreationForm: React.FC<ComponentProps> = ({ componentKey }) => {
   const { setProjectRequest, setApis, makeApiRequest, projectRequest } =
     useProjectCreationContext();
 
-  //   const [requestBody, setRequestBody] =
-  //     useState<ProjectCreationRequest>(projectRequest);
-
   setApis(currentApis);
 
   const handleOnChangeInputElement = (

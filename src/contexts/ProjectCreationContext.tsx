@@ -25,12 +25,6 @@ export function ProjectCreationProvider({ children }: { children: ReactNode }) {
     postData(apis[0], projectRequest);
   };
 
-  //const { data, isLoading, error } = usePostApiHook(apis[0], projectRequest);
-
-  // useEffect(() => {
-  //  setKpis(data)
-  // }, [data]);
-
   return (
     <ProjectCreationContext.Provider
       value={{

@@ -6,6 +6,9 @@
     },
     "projectCreation": {
       "createProject": ["/projects"]
+    },
+    "projects": {
+      "projectCatalog": ["/projects"]
     }
   }
 }

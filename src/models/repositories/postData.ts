@@ -4,7 +4,6 @@ export default async function postData(
   url: string,
   requestBody: any
 ): Promise<any> {
-  // Simulate an asynchronous operation, e.g., fetching data from an API
   let isLoading: boolean = true;
   let data;
   let error;
