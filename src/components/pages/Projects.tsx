@@ -1,17 +1,17 @@
-import { Theme } from "@mui/material";
-import { makeStyles, createStyles } from "@mui/styles";
+import ProjectCatalogStory from "../organisms/projects/ProjectCatalogStory";
+import { ProjectCatalogProvider } from "../../contexts/ProjectCatalogContext";
+import ProjectCatalog from "../organisms/projects/ProjectCatalog";
+import { ComponentProps } from "../../models/components/ComponentProps";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      color: theme.palette.primary.dark,
-    },
-  })
-);
-
-const ProjectCreation: React.FC = () => {
-  const classes = useStyles();
-  return <>view all project</>;
+const Projects: React.FC<ComponentProps> = ({ componentKey }) => {
+  return (
+    <>
+      <ProjectCatalogProvider>
+        <ProjectCatalogStory />
+        <ProjectCatalog componentKey={componentKey + ".projectCatalog"} />
+      </ProjectCatalogProvider>
+    </>
+  );
 };
 
-export default ProjectCreation;
+export default Projects;

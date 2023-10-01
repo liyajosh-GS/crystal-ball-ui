@@ -11,7 +11,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
     },
     title: {
-      color: theme.palette.primary.dark,
+      color: "white",
+      padding: theme.spacing(2),
+      backgroundColor: theme.palette.primary.light,
+      borderRadius: theme.spacing(1),
     },
     paper: {
       padding: theme.spacing(2),

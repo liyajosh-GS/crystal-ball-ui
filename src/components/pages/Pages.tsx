@@ -1,8 +1,3 @@
-import { CssBaseline, Theme, Toolbar, Typography } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
-import { PageShellProps } from "../../models/components/pages/PageShellProps";
-import { makeStyles, createStyles } from "@mui/styles";
 import Dashboard from "./Dashboard";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
@@ -20,8 +15,8 @@ const Pages: React.FC = () => {
           <ProjectCreation componentKey="apis.projectCreation" />
         </Route>
 
-        <Route exact path="/projects">
-          <Projects />
+        <Route exact path="/projects-catalog">
+          <Projects componentKey="apis.projects" />
         </Route>
       </Switch>
     </>

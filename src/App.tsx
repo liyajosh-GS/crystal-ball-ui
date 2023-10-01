@@ -1,11 +1,8 @@
-import React from "react";
 import "./App.css";
-import Dashboard from "./components/pages/Dashboard";
 import PageShell from "./components/organisms/PageShell";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Pages from "./components/pages/Pages";
 import { BrowserRouter } from "react-router-dom";
-import background from "../public/images/theme.jpg";
 
 const theme = createTheme({
   palette: {
@@ -31,10 +28,10 @@ const theme = createTheme({
 
 const backgroundStyle = {
   backgroundImage: `url(/images/theme.jpg)`,
-  height: "100vh",
   fontSize: "50px",
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
+  backgroundAttachment: "fixed",
 };
 
 function App() {
