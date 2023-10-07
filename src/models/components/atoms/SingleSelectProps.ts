@@ -4,7 +4,9 @@ export interface DropdownOptions {
 }
 
 export interface SingleSelectProps {
-  label: string;
   dropdownOptions: DropdownOptions[];
   onChange: (value: string) => void;
+  defaultValue?: string;
+  disabled?: boolean;
+  label?: string;
 }

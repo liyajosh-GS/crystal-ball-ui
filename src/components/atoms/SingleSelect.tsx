@@ -22,6 +22,8 @@ const SingleSelect: React.FC<SingleSelectProps> = ({
   dropdownOptions,
   onChange,
   label,
+  defaultValue,
+  disabled = false,
 }) => {
   const [value, setValue] = React.useState<string>("");
   const classes = useStyles();
@@ -43,10 +45,12 @@ const SingleSelect: React.FC<SingleSelectProps> = ({
         <InputLabel className={classes.label}>{label}</InputLabel>
         <Select
           variant="standard"
-          value={value}
+          value={defaultValue || ""}
           onChange={handleChange}
           fullWidth
+          defaultValue={defaultValue}
           className={classes.input}
+          disabled={disabled}
         >
           {getOptions()}
         </Select>

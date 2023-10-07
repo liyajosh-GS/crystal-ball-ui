@@ -7,6 +7,9 @@ import SingleSelect from "../../atoms/SingleSelect";
 import { makeStyles, createStyles } from "@mui/styles";
 import { ComponentProps } from "../../../models/components/ComponentProps";
 import DynamicTextFieldForm from "../../molecules/DynamicTextField";
+import { useAppContext } from "../../../contexts/AppContext";
+import { ProjectCreationRequest } from "../../../models/contexts/ProjectCreationContextProps";
+import postData from "../../../models/repositories/postData";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,8 +42,9 @@ const ProjectCreationForm: React.FC<ComponentProps> = ({ componentKey }) => {
 
   const { apiConfig } = useApiContext();
   const currentApis: string[] = _.get(apiConfig, componentKey);
+  const { user, setUser } = useAppContext();
 
-  const { setProjectRequest, setApis, makeApiRequest, projectRequest } =
+  const { setProjectRequest, setApis, projectRequest } =
     useProjectCreationContext();
 
   setApis(currentApis);
@@ -64,6 +68,13 @@ const ProjectCreationForm: React.FC<ComponentProps> = ({ componentKey }) => {
     let request = { ...projectRequest };
     request = { ...request, creators: value };
     setProjectRequest(request);
+  };
+
+  const makeApiRequest = async () => {
+    if (currentApis?.length > 0) {
+      //et request: ProjectCreationRequest =
+      postData(currentApis[0], projectRequest, user.access_token);
+    }
   };
 
   return (

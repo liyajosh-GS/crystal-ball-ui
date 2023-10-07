@@ -4,7 +4,7 @@ import { User, AppContextProps } from "../models/contexts/AppContextProps";
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [route, setRoute] = useState<string>("");
 
   return (
