@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { makeStyles, createStyles } from "@mui/styles";
 import { Theme } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,6 +26,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const goToProjectDetailPage = () => {
+    history.push(`/projects-detail-page/${project.id}`);
+  };
   return (
     <Card
       sx={{
@@ -66,12 +72,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             fontWeight={900}
             className={classes.collectedFund}
           >
-            Fund Collected: ${0}
+            Fund Collected: ${project.collectedFund}
           </Typography>
         </Stack>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={goToProjectDetailPage}>
           View Details
         </Button>
       </CardActions>

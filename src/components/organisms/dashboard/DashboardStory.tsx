@@ -26,7 +26,7 @@ const DashboardStory: React.FC = () => {
   const history = useHistory();
 
   const goToCreationPage = () => {
-    history.push("/createProject");
+    history.push("/create-project");
   };
 
   const goToProjectCatalog = () => {

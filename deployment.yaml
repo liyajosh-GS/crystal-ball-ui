@@ -1,0 +1,19 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: crystal-ball-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: crystal-ball-ui
+  template:
+    metadata:
+      labels:
+        app: crystal-ball-ui
+    spec:
+      containers:
+        - name: crystal-ball-ui
+          image: liyajosh/crystal-ball-ui:latest
+          ports:
+            - containerPort: 80

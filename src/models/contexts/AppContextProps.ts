@@ -4,8 +4,8 @@ export interface User {
 }
 
 export interface AppContextProps {
-  user: User | null;
+  user: any;
   route: string;
-  setUser: (user: User | null) => void;
+  setUser: (user: any) => void;
   setRoute: (route: string) => void;
 }

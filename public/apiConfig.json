@@ -9,6 +9,10 @@
     },
     "projects": {
       "projectCatalog": ["/projects"]
+    },
+    "projectDetailPage": {
+      "project": ["/projects/"],
+      "contribution": ["/contributions"]
     }
   }
 }
