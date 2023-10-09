@@ -45,7 +45,7 @@ const SingleSelect: React.FC<SingleSelectProps> = ({
         <InputLabel className={classes.label}>{label}</InputLabel>
         <Select
           variant="standard"
-          value={defaultValue || ""}
+          value={value || defaultValue || ""}
           onChange={handleChange}
           fullWidth
           defaultValue={defaultValue}

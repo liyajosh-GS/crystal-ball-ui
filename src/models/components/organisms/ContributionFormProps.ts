@@ -1,5 +1,3 @@
-import { ComponentProps } from "../ComponentProps";
-
-export interface ContributionFormProps extends ComponentProps {
+export interface ContributionFormProps {
   projectId: string;
 }

@@ -1,18 +1,12 @@
 {
   "baseUrl": "http://localhost:8080",
-  "apis": {
-    "dashboard": {
-      "kpis": ["/getTotalContributions", "/getTotalContributions"]
-    },
-    "projectCreation": {
-      "createProject": ["/projects"]
-    },
-    "projects": {
-      "projectCatalog": ["/projects"]
-    },
-    "projectDetailPage": {
-      "project": ["/projects/"],
-      "contribution": ["/contributions"]
-    }
-  }
+  "totalProjects": "/total-projects",
+  "totalFund": "/total-fund",
+  "totalUsers": "/total-users",
+  "createProject": "/projects",
+  "projectCatalog": "/projects",
+  "projectDetail": "/projects/",
+  "createContribution": "/contributions",
+  "login": "/login",
+  "register": "/register"
 }

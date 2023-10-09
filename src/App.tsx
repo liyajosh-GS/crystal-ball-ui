@@ -18,6 +18,12 @@ const theme = createTheme({
       dark: "#ba000d",
       contrastText: "#000",
     },
+    success: {
+      main: "#388e3c",
+    },
+    error: {
+      main: "#f44336",
+    },
   },
   typography: {
     button: {

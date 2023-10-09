@@ -2,6 +2,7 @@ import { CssBaseline, Theme, Toolbar, Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { PageShellProps } from "../../models/components/pages/PageShellProps";
 import { makeStyles, createStyles } from "@mui/styles";
+import SnackbarComponent from "../molecules/Snackbar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,6 +26,7 @@ const PageShell: React.FC<PageShellProps> = ({ children, title }) => {
         </Toolbar>
       </AppBar>
       {children}
+      <SnackbarComponent />
     </>
   );
 };

@@ -4,22 +4,30 @@ import { Route, Switch } from "react-router-dom";
 import ProjectCreation from "./ProjectCreation";
 import Projects from "./Projects";
 import ProjectDetailPage from "./ProjectDetailPage";
+import LoginPage from "./LoginPage";
+import {
+  CREATE_PAGE_ROUTE,
+  PROJECT_CATALOG_PAGE_ROUTE,
+} from "../../constants/constant";
 
 const Pages: React.FC = () => {
   return (
     <>
       <Switch>
         <Route exact path={"/"}>
-          <Dashboard componentKey="apis.dashboard" />
+          <Dashboard />
         </Route>
-        <Route exact path="/create-project">
-          <ProjectCreation componentKey="apis.projectCreation" />
+        <Route path={CREATE_PAGE_ROUTE}>
+          <ProjectCreation />
         </Route>
-        <Route exact path="/projects-catalog">
-          <Projects componentKey="apis.projects" />
+        <Route exact path={PROJECT_CATALOG_PAGE_ROUTE}>
+          <Projects />
         </Route>
-        <Route exact path="/projects-detail-page/:projectId">
-          <ProjectDetailPage componentKey="apis.projectDetailPage" />
+        <Route path="/projects-detail-page/:projectId">
+          <ProjectDetailPage />
+        </Route>
+        <Route exact path={"/login/:initialPage"}>
+          <LoginPage onSuccessGoBackTo={"/"} />
         </Route>
       </Switch>
     </>
