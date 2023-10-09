@@ -1,14 +1,13 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { User, AppContextProps } from "../models/contexts/AppContextProps";
+import { AppContextProps } from "../models/contexts/AppContextProps";
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<any>(null);
-  const [route, setRoute] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState<any>(null);
 
   return (
-    <AppContext.Provider value={{ user, route, setUser, setRoute }}>
+    <AppContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       {children}
     </AppContext.Provider>
   );

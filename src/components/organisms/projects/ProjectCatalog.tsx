@@ -1,10 +1,10 @@
 import { Grid, Theme, Typography } from "@mui/material";
-import { makeStyles, createStyles } from "@mui/styles";
+import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
 import { useApiContext } from "../../../contexts/ApiContext";
-import { ComponentProps } from "../../../models/components/ComponentProps";
-import { useProjectCatalogContext } from "../../../contexts/ProjectCatalogContext";
+import useGetApiHook from "../../../hooks/useGetApiHook";
 import ProjectCard from "./ProjectCard";
+import { GET_PROJECTS_LIST_API } from "../../../constants/constant";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,15 +14,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ProjectCatalog: React.FC<ComponentProps> = ({ componentKey }) => {
+const ProjectCatalog: React.FC = () => {
   const classes = useStyles();
 
   const { apiConfig } = useApiContext();
-  const currentApis: string[] = _.get(apiConfig, componentKey);
+  const currentApi: string = _.get(apiConfig, GET_PROJECTS_LIST_API);
 
-  const { setApis, data } = useProjectCatalogContext();
-
-  setApis(currentApis);
+  const { data, isLoading, error } = useGetApiHook(currentApi);
 
   return (
     <div className={classes.root}>
@@ -31,7 +29,7 @@ const ProjectCatalog: React.FC<ComponentProps> = ({ componentKey }) => {
       </Typography>
       <Grid container spacing={4}>
         {data &&
-          data.map((project) => (
+          data.map((project: any) => (
             <Grid item key={project.name} xs={12} sm={6} md={4}>
               <ProjectCard project={project} />
             </Grid>

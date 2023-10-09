@@ -3,25 +3,25 @@ import { useEffect, useState } from "react";
 
 export default function useGetApiHook(url: string): {
   data: any | null;
-  isApiLoading: boolean;
-  apiError: any;
+  isLoading: boolean;
+  error: any;
 } {
   const [data, setData] = useState<any | null>();
-  const [isApiLoading, setIsApiLoading] = useState<boolean>(false);
-  const [apiError, setApiError] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>();
 
   const getData = async () => {
-    setIsApiLoading(true);
+    setIsLoading(true);
     try {
       const serverUrl = process.env.REACT_APP_SERVER_URL;
       const response: AxiosResponse = await axios.get(serverUrl + url);
       setData(response.data);
-      setApiError(null);
+      setError(null);
     } catch (err: any) {
-      setApiError(err);
+      setError(err);
       setData(null);
     } finally {
-      setIsApiLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -31,5 +31,5 @@ export default function useGetApiHook(url: string): {
     }
   }, [url]);
 
-  return { data, isApiLoading, apiError };
+  return { data, isLoading, error };
 }

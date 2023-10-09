@@ -2,8 +2,6 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import DashboardStory from "../organisms/dashboard/DashboardStory";
 import DashboardKpis from "../organisms/dashboard/DashboardKpis";
-import { ComponentProps } from "../../models/components/ComponentProps";
-import { DashboardProvider } from "../../contexts/DashboardContext";
 
 function Copyright() {
   return (
@@ -18,13 +16,11 @@ function Copyright() {
   );
 }
 
-const Dashboard: React.FC<ComponentProps> = ({ componentKey }) => {
+const Dashboard: React.FC = () => {
   return (
     <main>
-      <DashboardProvider>
-        <DashboardStory />
-        <DashboardKpis componentKey={componentKey + ".kpis"} />
-      </DashboardProvider>
+      <DashboardStory />
+      <DashboardKpis />
     </main>
 
     // <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">

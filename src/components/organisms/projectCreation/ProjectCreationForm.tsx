@@ -1,15 +1,18 @@
-import { Theme, Grid, TextField, Button, Box } from "@mui/material";
+import { Box, Button, Grid, TextField, Theme } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
+import {
+  ACCESS_TOKEN,
+  CREATE_PROJECT_API_KEY,
+  PROJECT_CATALOG_PAGE_ROUTE,
+} from "../../../constants/constant";
 import { useApiContext } from "../../../contexts/ApiContext";
-import { useProjectCreationContext } from "../../../contexts/ProjectCreationContext";
+import { ProjectCreationRequest } from "../../../models/repositories/ProjectCreationRequestProps";
+import postData from "../../../repositories/postData";
 import SingleSelect from "../../atoms/SingleSelect";
-import { makeStyles, createStyles } from "@mui/styles";
-import { ComponentProps } from "../../../models/components/ComponentProps";
 import DynamicTextFieldForm from "../../molecules/DynamicTextField";
-import { useAppContext } from "../../../contexts/AppContext";
-import { ProjectCreationRequest } from "../../../models/contexts/ProjectCreationContextProps";
-import postData from "../../../models/repositories/postData";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,17 +40,22 @@ const dropdownOptions = [
   },
 ];
 
-const ProjectCreationForm: React.FC<ComponentProps> = ({ componentKey }) => {
+const ProjectCreationForm: React.FC = () => {
   const classes = useStyles();
 
   const { apiConfig } = useApiContext();
-  const currentApis: string[] = _.get(apiConfig, componentKey);
-  const { user, setUser } = useAppContext();
+  const currentApi: string = _.get(apiConfig, CREATE_PROJECT_API_KEY);
+  const history = useHistory();
+  const { setShowSnackBar, setApiResponseType, setApiResponseMessage } =
+    useApiContext();
 
-  const { setProjectRequest, setApis, projectRequest } =
-    useProjectCreationContext();
-
-  setApis(currentApis);
+  const [projectRequest, setProjectRequest] = useState<ProjectCreationRequest>({
+    name: "",
+    description: "",
+    projectType: "",
+    targetFund: "",
+    creators: [],
+  });
 
   const handleOnChangeInputElement = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -71,9 +79,20 @@ const ProjectCreationForm: React.FC<ComponentProps> = ({ componentKey }) => {
   };
 
   const makeApiRequest = async () => {
-    if (currentApis?.length > 0) {
-      //et request: ProjectCreationRequest =
-      postData(currentApis[0], projectRequest, user.access_token);
+    if (currentApi?.length > 0) {
+      postData(
+        currentApi,
+        projectRequest,
+        sessionStorage.getItem(ACCESS_TOKEN)
+      ).then((response) => {
+        if (response.error === null) {
+          history.push(PROJECT_CATALOG_PAGE_ROUTE);
+        } else {
+          setApiResponseMessage("Could not create project try again");
+          setApiResponseType("error");
+          setShowSnackBar(true);
+        }
+      });
     }
   };
 

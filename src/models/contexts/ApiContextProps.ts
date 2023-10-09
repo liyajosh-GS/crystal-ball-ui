@@ -1,11 +1,11 @@
-export interface ConfigType {
-  apiConfig: { [key: string]: any };
-}
+import { AlertColor } from "@mui/material";
 
-export interface ApiConfigProps {
-  apis: string[];
-  setApis: (api: string[]) => void;
-  isApiLoading: boolean;
-  apiError: string;
-  makeApiRequest?: () => void;
+export interface ApiContextProps {
+  showSnackBar: boolean;
+  apiResponseMessage: string | undefined;
+  apiResponseType: AlertColor;
+  setShowSnackBar: (show: boolean) => void;
+  setApiResponseMessage: (response: string) => void;
+  setApiResponseType: (type: AlertColor) => void;
+  apiConfig: { [key: string]: any };
 }

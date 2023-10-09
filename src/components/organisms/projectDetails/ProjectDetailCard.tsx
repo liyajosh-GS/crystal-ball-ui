@@ -1,60 +1,30 @@
 import {
-  Theme,
-  Grid,
-  TextField,
-  Button,
-  Box,
-  Paper,
-  Stack,
-  Typography,
   Card,
-  CardActions,
-  CardContent,
   CardHeader,
   Container,
-  IconButton,
   Divider,
+  Grid,
+  Theme,
+  Typography,
 } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApiContext } from "../../../contexts/ApiContext";
-import { useProjectCreationContext } from "../../../contexts/ProjectCreationContext";
 import SingleSelect from "../../atoms/SingleSelect";
-import { makeStyles, createStyles } from "@mui/styles";
-import { ComponentProps } from "../../../models/components/ComponentProps";
-import DynamicTextFieldForm from "../../molecules/DynamicTextField";
-import {
-  ProjectCardProps,
-  ProjectDetail,
-} from "../../../models/components/organisms/ProjectCardProps";
-import fetchData from "../../../models/repositories/fetchData";
+
 import { useParams } from "react-router-dom";
+import { ProjectCardProps } from "../../../models/components/organisms/ProjectCardProps";
+import fetchData from "../../../repositories/fetchData";
 import DisplayAndEditText from "../../atoms/DisplayAndEditTextField";
-import postData from "../../../models/repositories/postData";
 import ContributionForm from "./ContributionForm";
+import { GET_PROJECT_DETAIL } from "../../../constants/constant";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: theme.spacing(4),
     },
-
-    // card: {
-    //   maxWidth: 400,
-    //   margin: "auto",
-    //   marginTop: theme.spacing(2),
-    //   boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)",
-    //   borderRadius: "12px",
-    // },
-    // header: {
-    //   backgroundColor: theme.palette.primary.main,
-    //   color: "#fff",
-    //   padding: theme.spacing(2),
-    //   textAlign: "center",
-    // },
-    // content: {
-    //   padding: theme.spacing(2),
-    // },
     card: {
       boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)",
       borderRadius: "12px",
@@ -80,59 +50,39 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const detailtoTextMapping = {
-  name: "Name",
-  description: "Decsription",
-  projectType: "Project Type",
-  targetFund: "Fund requested",
-  collectedFund: "Fund Raised",
-  creators: "Created by",
-  createdTime: "Created on",
-};
+const dropdownOptions = [
+  {
+    label: "Software",
+    value: "SOFTWARE",
+  },
+  {
+    label: "GreenTechnology",
+    value: "GREEN_TECHNOLOGY",
+  },
+  {
+    label: "Medical",
+    value: "MEDICAL",
+  },
+];
 
-const ProjectDetailCard: React.FC<ComponentProps> = ({ componentKey }) => {
+const ProjectDetailCard: React.FC = () => {
   const classes = useStyles();
   const { projectId } = useParams<{ projectId: string }>();
 
   const { apiConfig } = useApiContext();
-  const currentApis: string[] = _.get(apiConfig, componentKey + ".project");
+  const currentApi: string = _.get(apiConfig, GET_PROJECT_DETAIL);
 
   const [project, setProject] = useState<ProjectCardProps | null>();
 
-  const dropdownOptions = [
-    {
-      label: "Software",
-      value: "SOFTWARE",
-    },
-    {
-      label: "GreenTechnology",
-      value: "GREEN_TECHNOLOGY",
-    },
-    {
-      label: "Medical",
-      value: "MEDICAL",
-    },
-  ];
-
   useEffect(() => {
-    if (currentApis?.length > 0) {
-      fetchData(currentApis[0] + projectId)
+    if (currentApi?.length > 0) {
+      fetchData(currentApi + projectId)
         .then((response) => setProject({ project: response.data }))
         .catch((err) => setProject(null));
     }
-  }, [currentApis]);
+  }, [projectId]);
 
   const handleOnChangeInputElement = (event: string, key: string) => {};
-
-  const getProjectDetails = (
-    projectData: ProjectDetail
-  ): { name: string; value: string }[] => {
-    const projectArray = Object.entries(projectData).map(([name, value]) => ({
-      name,
-      value,
-    }));
-    return projectArray;
-  };
 
   const renderProjectDetails = (project: ProjectCardProps | undefined) => {
     const detail = project?.project;
@@ -142,12 +92,7 @@ const ProjectDetailCard: React.FC<ComponentProps> = ({ componentKey }) => {
         <Card className={classes.card}>
           <CardHeader
             title={detail?.name}
-            action={
-              <ContributionForm
-                componentKey={componentKey}
-                projectId={projectId}
-              />
-            }
+            action={<ContributionForm projectId={projectId} />}
             classes={{
               title: classes.title,
             }}

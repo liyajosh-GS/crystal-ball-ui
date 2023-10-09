@@ -1,14 +1,20 @@
-import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
-import { ProjectCardProps } from "../../../models/components/organisms/ProjectCardProps";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import { makeStyles, createStyles } from "@mui/styles";
 import { Theme } from "@mui/material";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { createStyles, makeStyles } from "@mui/styles";
+import React from "react";
 import { useHistory } from "react-router-dom";
+import { ProjectCardProps } from "../../../models/components/organisms/ProjectCardProps";
+import {
+  ACCESS_TOKEN,
+  LOGIN_PAGE,
+  PROJECT_CATALOG_PAGE_ROUTE,
+  PROJECT_DETAIL_PAGE_ROUTE,
+} from "../../../constants/constant";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,7 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: theme.spacing(1),
     },
     collectedFund: {
-      //borderBottom: "8px solid green",
       color: "green",
     },
   })
@@ -29,7 +34,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const history = useHistory();
 
   const goToProjectDetailPage = () => {
-    history.push(`/projects-detail-page/${project.id}`);
+    if (sessionStorage.getItem(ACCESS_TOKEN) !== undefined) {
+      history.push(`${PROJECT_DETAIL_PAGE_ROUTE}${project.id}`);
+    } else {
+      history.push(`${LOGIN_PAGE}${PROJECT_CATALOG_PAGE_ROUTE}`);
+    }
   };
   return (
     <Card

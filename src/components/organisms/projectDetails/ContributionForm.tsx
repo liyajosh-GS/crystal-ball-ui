@@ -1,33 +1,31 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import postData from "../../../models/repositories/postData";
-import { ComponentProps } from "../../../models/components/ComponentProps";
-import { useApiContext } from "../../../contexts/ApiContext";
-import _ from "lodash";
-import { ContributionFormProps } from "../../../models/components/organisms/ContributionFormProps";
-import { ChangeEvent } from "react";
-import { ContributionRequest } from "../../../models/contexts/ProjectContributionContextProps";
-import { useAppContext } from "../../../contexts/AppContext";
+import TextField from "@mui/material/TextField";
+import * as React from "react";
+import postData from "../../../repositories/postData";
 
-const ContributionForm: React.FC<ContributionFormProps> = ({
-  componentKey,
-  projectId,
-}) => {
+import _ from "lodash";
+import { ChangeEvent } from "react";
+import { useApiContext } from "../../../contexts/ApiContext";
+import { ContributionFormProps } from "../../../models/components/organisms/ContributionFormProps";
+import { ContributionRequest } from "../../../models/repositories/ContributionRequestProps";
+import {
+  ACCESS_TOKEN,
+  CREATE_CONTRIBUTION_API_KEY,
+} from "../../../constants/constant";
+
+const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
   const { apiConfig } = useApiContext();
-  const currentApis: string[] = _.get(
-    apiConfig,
-    componentKey + ".contribution"
-  );
+  const currentApi: string = _.get(apiConfig, CREATE_CONTRIBUTION_API_KEY);
 
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string>();
-  const { user, setUser } = useAppContext();
+  const { setShowSnackBar, setApiResponseType, setApiResponseMessage } =
+    useApiContext();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,12 +43,24 @@ const ContributionForm: React.FC<ContributionFormProps> = ({
   };
 
   const makeApiRequest = async () => {
-    if (currentApis?.length > 0) {
+    if (currentApi?.length > 0) {
       let request: ContributionRequest = {
         projectId: projectId,
         amount: (value && Number.parseFloat(value)) || 0.0,
       };
-      postData(currentApis[0], request);
+      postData(currentApi, request, sessionStorage.getItem(ACCESS_TOKEN)).then(
+        (response) => {
+          if (response.error === null) {
+            setApiResponseMessage("Contribution made successfully");
+            setApiResponseType("success");
+            setShowSnackBar(true);
+          } else {
+            setApiResponseMessage("Could not make contribution, try again");
+            setApiResponseType("error");
+            setShowSnackBar(true);
+          }
+        }
+      );
     }
   };
 
