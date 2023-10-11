@@ -7,6 +7,7 @@ import {
   ACCESS_TOKEN,
   CREATE_PROJECT_API_KEY,
   PROJECT_CATALOG_PAGE_ROUTE,
+  USER_ID,
 } from "../../../constants/constant";
 import { useApiContext } from "../../../contexts/ApiContext";
 import { ProjectCreationRequest } from "../../../models/repositories/ProjectCreationRequestProps";
@@ -55,6 +56,7 @@ const ProjectCreationForm: React.FC = () => {
     projectType: "",
     targetFund: "",
     creators: [],
+    userId: sessionStorage.getItem(USER_ID) || "",
   });
 
   const handleOnChangeInputElement = (
@@ -80,19 +82,21 @@ const ProjectCreationForm: React.FC = () => {
 
   const makeApiRequest = async () => {
     if (currentApi?.length > 0) {
-      postData(
-        currentApi,
-        projectRequest,
-        sessionStorage.getItem(ACCESS_TOKEN)
-      ).then((response) => {
-        if (response.error === null) {
-          history.push(PROJECT_CATALOG_PAGE_ROUTE);
-        } else {
-          setApiResponseMessage("Could not create project try again");
-          setApiResponseType("error");
-          setShowSnackBar(true);
+      let request = {
+        ...projectRequest,
+        userId: sessionStorage.getItem(USER_ID) || "",
+      };
+      postData(currentApi, request, sessionStorage.getItem(ACCESS_TOKEN)).then(
+        (response) => {
+          if (response.error === null) {
+            history.push(PROJECT_CATALOG_PAGE_ROUTE);
+          } else {
+            setApiResponseMessage("Could not create project try again");
+            setApiResponseType("error");
+            setShowSnackBar(true);
+          }
         }
-      });
+      );
     }
   };
 

@@ -16,6 +16,7 @@ import { ContributionRequest } from "../../../models/repositories/ContributionRe
 import {
   ACCESS_TOKEN,
   CREATE_CONTRIBUTION_API_KEY,
+  USER_ID,
 } from "../../../constants/constant";
 
 const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
@@ -47,6 +48,7 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
       let request: ContributionRequest = {
         projectId: projectId,
         amount: (value && Number.parseFloat(value)) || 0.0,
+        userId: sessionStorage.getItem(USER_ID) || "",
       };
       postData(currentApi, request, sessionStorage.getItem(ACCESS_TOKEN)).then(
         (response) => {
