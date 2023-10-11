@@ -9,3 +9,4 @@ export const CREATE_PROJECT_API_KEY = "createProject";
 export const CREATE_CONTRIBUTION_API_KEY = "createContribution";
 export const GET_PROJECT_DETAIL = "projectDetail";
 export const GET_PROJECTS_LIST_API = "projectCatalog";
+export const USER_ID = "USER_ID";
