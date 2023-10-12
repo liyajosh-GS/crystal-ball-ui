@@ -1,6 +1,4 @@
-import { UserInfoProps } from "./UserInfoProps";
-
-export interface ContributionRequest extends UserInfoProps {
+export interface ContributionRequest {
   amount: number;
   projectId: string;
 }

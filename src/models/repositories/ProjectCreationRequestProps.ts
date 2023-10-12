@@ -1,9 +1,7 @@
-import { UserInfoProps } from "./UserInfoProps";
-
-export interface ProjectCreationRequest extends UserInfoProps {
+export interface ProjectCreationRequest {
   name: string;
   description: string;
   projectType: string;
   targetFund: string;
-  creators: string[];
+  groupMembers: string[];
 }

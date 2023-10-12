@@ -15,6 +15,7 @@ import {
   PROJECT_CATALOG_PAGE_ROUTE,
   PROJECT_DETAIL_PAGE_ROUTE,
 } from "../../../constants/constant";
+import { useAppContext } from "../../../contexts/AppContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,12 +33,17 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { setRedirectBackTo } = useAppContext();
 
   const goToProjectDetailPage = () => {
-    if (sessionStorage.getItem(ACCESS_TOKEN) !== undefined) {
+    if (
+      sessionStorage.getItem(ACCESS_TOKEN) &&
+      sessionStorage.getItem(ACCESS_TOKEN) !== undefined
+    ) {
       history.push(`${PROJECT_DETAIL_PAGE_ROUTE}${project.id}`);
     } else {
-      history.push(`${LOGIN_PAGE}${PROJECT_CATALOG_PAGE_ROUTE}`);
+      setRedirectBackTo(`${PROJECT_DETAIL_PAGE_ROUTE}${project.id}`);
+      history.push(`${LOGIN_PAGE}`);
     }
   };
   return (

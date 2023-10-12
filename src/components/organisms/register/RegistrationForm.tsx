@@ -3,16 +3,13 @@ import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
 import React, { ChangeEvent, useState } from "react";
 import { useApiContext } from "../../../contexts/ApiContext";
-
 import { useHistory, useParams } from "react-router-dom";
 import {
   ACCESS_TOKEN,
   LOGIN_API_KEY,
   REGISTER_API_KEY,
 } from "../../../constants/constant";
-import { LoginFormProps } from "../../../models/components/organisms/LoginFormProps";
 import postData from "../../../repositories/postData";
-import { useAppContext } from "../../../contexts/AppContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,27 +23,30 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const LoginForm: React.FC = () => {
+const RegistrationForm: React.FC = () => {
   const classes = useStyles();
-
+  const history = useHistory();
   const { apiConfig } = useApiContext();
-  const { redirectBackTo } = useAppContext();
+
+  console.log("apiConfig " + JSON.stringify(apiConfig));
+
   const { setShowSnackBar, setApiResponseType, setApiResponseMessage } =
     useApiContext();
-
   const api: any = {
     login: _.get(apiConfig, LOGIN_API_KEY),
     register: _.get(apiConfig, REGISTER_API_KEY),
   };
-  const history = useHistory();
 
   const [userRequest, setUserRequest] = useState<{
     userName: string;
     password: string;
+    email: string;
   }>({
     userName: "",
     password: "",
+    email: "",
   });
+
   const handleOnChangeInputElement = (
     event: React.ChangeEvent<HTMLInputElement>,
     key: string
@@ -65,7 +65,7 @@ const LoginForm: React.FC = () => {
       ).then((response) => {
         if (response.error === null) {
           console.log("success");
-          history.push(`${redirectBackTo === null ? "/" : redirectBackTo}`);
+          history.push("/");
         } else {
           setApiResponseMessage(response.error);
           setApiResponseType("error");
@@ -75,8 +75,8 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const makeApiRequestLogin = async () => {
-    let currentApi = api.login;
+  const makeApiRequestRegister = async () => {
+    let currentApi = api.register;
     handleApiResponse(currentApi);
   };
 
@@ -119,24 +119,35 @@ const LoginForm: React.FC = () => {
             }
           />
         </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="email"
+            name="email"
+            label="Email"
+            fullWidth
+            type="email"
+            autoComplete="family-name"
+            variant="outlined"
+            onChange={(event) =>
+              handleOnChangeInputElement(
+                event as ChangeEvent<HTMLInputElement>,
+                "email"
+              )
+            }
+          />
+        </Grid>
       </Grid>
       <Box
-        sx={{
-          display: "block",
-          justifyContent: "flex-end",
-          paddingLeft: "24px",
-          paddingRight: "24px",
-        }}
+        sx={{ display: "flex", justifyContent: "flex-end", padding: "24px" }}
       >
-        <Button fullWidth variant="contained" onClick={makeApiRequestLogin}>
-          Login
+        <Button variant="contained" fullWidth onClick={makeApiRequestRegister}>
+          Register
         </Button>
-        <Link href="/registration" variant="body2">
-          {"Don't have an account? Register"}
-        </Link>
       </Box>
     </React.Fragment>
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;

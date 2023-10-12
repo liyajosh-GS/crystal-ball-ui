@@ -14,7 +14,6 @@ import { ProjectCreationRequest } from "../../../models/repositories/ProjectCrea
 import postData from "../../../repositories/postData";
 import SingleSelect from "../../atoms/SingleSelect";
 import DynamicTextFieldForm from "../../molecules/DynamicTextField";
-import { StepperControlProps } from "../../../models/components/organisms/StepperControlProps";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,9 +47,7 @@ const dropdownOptions = [
   },
 ];
 
-const ProjectCreationForm: React.FC<StepperControlProps> = ({
-  onSuccessCallback,
-}) => {
+const AccountDetailsForm: React.FC = () => {
   const classes = useStyles();
 
   const { apiConfig } = useApiContext();
@@ -96,8 +93,7 @@ const ProjectCreationForm: React.FC<StepperControlProps> = ({
       postData(currentApi, request, sessionStorage.getItem(ACCESS_TOKEN)).then(
         (response) => {
           if (response.error === null) {
-            onSuccessCallback();
-            // history.push(PROJECT_CATALOG_PAGE_ROUTE);
+            history.push(PROJECT_CATALOG_PAGE_ROUTE);
           } else {
             setApiResponseMessage("Could not create project try again");
             setApiResponseType("error");
@@ -111,22 +107,22 @@ const ProjectCreationForm: React.FC<StepperControlProps> = ({
   return (
     <React.Fragment>
       {/* <Typography variant="h5" align="left" className={classes.title}>
-        Register your project!
+        Add Bank Details
       </Typography> */}
       <Grid container spacing={3} className={classes.root}>
         <Grid item xs={12}>
           <TextField
             required
-            id="name"
-            name="name"
-            label="Project Name"
+            id="account"
+            name="account"
+            label="Bank Account Number"
             fullWidth
             autoComplete="given-name"
-            variant="standard"
+            variant="outlined"
             onChange={(event) =>
               handleOnChangeInputElement(
                 event as ChangeEvent<HTMLInputElement>,
-                "name"
+                "account"
               )
             }
           />
@@ -134,47 +130,48 @@ const ProjectCreationForm: React.FC<StepperControlProps> = ({
         <Grid item xs={12}>
           <TextField
             required
-            id="description"
-            name="description"
-            label="Description"
+            id="re-account"
+            name="re-account"
+            label="Re-enter Account Number"
             fullWidth
             autoComplete="family-name"
-            variant="standard"
+            variant="outlined"
             onChange={(event) =>
               handleOnChangeInputElement(
                 event as ChangeEvent<HTMLInputElement>,
-                "description"
+                "re-account"
               )
             }
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
-            id="targetFund"
-            name="targetFund"
-            label="Amount required"
+            id="code"
+            name="code"
+            label="Bank IFSC Code"
             fullWidth
-            autoComplete="targetFund"
-            variant="standard"
+            variant="outlined"
             onChange={(event) =>
               handleOnChangeInputElement(
                 event as ChangeEvent<HTMLInputElement>,
-                "targetFund"
+                "code"
               )
             }
           />
         </Grid>
         <Grid item xs={12}>
-          <SingleSelect
-            label={"Project Type"}
-            dropdownOptions={dropdownOptions}
-            onChange={(value) => handleOnChangeForProjectType(value)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <DynamicTextFieldForm
-            label="Group Member(s)"
-            onChange={handleOnChangeForCreators}
+          <TextField
+            id="accountHolderName"
+            name="accountHolderName"
+            label="Account Holder's Name"
+            fullWidth
+            variant="outlined"
+            onChange={(event) =>
+              handleOnChangeInputElement(
+                event as ChangeEvent<HTMLInputElement>,
+                "accountHolderName"
+              )
+            }
           />
         </Grid>
       </Grid>
@@ -186,11 +183,11 @@ const ProjectCreationForm: React.FC<StepperControlProps> = ({
           variant="contained"
           onClick={makeApiRequest}
         >
-          Register Project
+          Save Bank Info
         </Button>
       </Box>
     </React.Fragment>
   );
 };
 
-export default ProjectCreationForm;
+export default AccountDetailsForm;

@@ -1,4 +1,4 @@
 export interface AppContextProps {
-  isAuthenticated: boolean;
-  setIsAuthenticated: (user: any) => void;
+  redirectBackTo: string | null;
+  setRedirectBackTo: (route: string) => void;
 }

@@ -5,7 +5,7 @@ export interface ProjectDetail {
   projectType: string;
   targetFund: string;
   collectedFund: string;
-  creators: string[];
+  groupMembers: string[];
   createdTime: string;
   updateTime: string;
 }

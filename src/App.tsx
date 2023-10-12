@@ -34,23 +34,24 @@ const theme = createTheme({
 
 const backgroundStyle = {
   backgroundImage: `url(/images/theme.jpg)`,
-  fontSize: "50px",
+  fontSize: "40px",
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backgroundAttachment: "fixed",
+  height: "120vh",
 };
 
 function App() {
   return (
-    <div className="App">
+    <div style={backgroundStyle}>
       <ThemeProvider theme={theme}>
-        <PageShell>
-          <BrowserRouter>
-            <div style={backgroundStyle}>
+        <BrowserRouter>
+          <PageShell>
+            <div>
               <Pages />
             </div>
-          </BrowserRouter>
-        </PageShell>
+          </PageShell>
+        </BrowserRouter>
       </ThemeProvider>
     </div>
   );

@@ -33,7 +33,6 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
   };
 
   const handleClose = () => {
-    makeApiRequest();
     setOpen(false);
   };
 
@@ -48,7 +47,6 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
       let request: ContributionRequest = {
         projectId: projectId,
         amount: (value && Number.parseFloat(value)) || 0.0,
-        userId: sessionStorage.getItem(USER_ID) || "",
       };
       postData(currentApi, request, sessionStorage.getItem(ACCESS_TOKEN)).then(
         (response) => {
@@ -92,7 +90,7 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={handleClose}>
+          <Button variant="contained" onClick={makeApiRequest}>
             Confirm
           </Button>
         </DialogActions>

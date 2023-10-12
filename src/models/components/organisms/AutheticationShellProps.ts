@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export interface PageShellProps {
-  title?: ReactNode;
+export interface AuthenticationShellProps {
+  title: string;
   children: ReactNode;
 }

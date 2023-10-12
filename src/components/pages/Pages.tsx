@@ -9,6 +9,8 @@ import {
   CREATE_PAGE_ROUTE,
   PROJECT_CATALOG_PAGE_ROUTE,
 } from "../../constants/constant";
+import UserRegistration from "./UserRegistration";
+import ProtectedRoute from "../organisms/ProtectedPageRoute";
 
 const Pages: React.FC = () => {
   return (
@@ -17,17 +19,23 @@ const Pages: React.FC = () => {
         <Route exact path={"/"}>
           <Dashboard />
         </Route>
-        <Route path={CREATE_PAGE_ROUTE}>
-          <ProjectCreation />
-        </Route>
         <Route exact path={PROJECT_CATALOG_PAGE_ROUTE}>
           <Projects />
         </Route>
         <Route path="/projects-detail-page/:projectId">
           <ProjectDetailPage />
         </Route>
-        <Route exact path={"/login/:initialPage"}>
-          <LoginPage onSuccessGoBackTo={"/"} />
+        <Route exact path={"/login"}>
+          <LoginPage />
+        </Route>
+        <Route exact path={"/registration"}>
+          <UserRegistration />
+        </Route>
+        <Route path={CREATE_PAGE_ROUTE}>
+          <ProtectedRoute
+            children={<ProjectCreation />}
+            redirectBackUrl={CREATE_PAGE_ROUTE}
+          />
         </Route>
       </Switch>
     </>
