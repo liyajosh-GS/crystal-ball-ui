@@ -65,13 +65,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessGoBackTo }) => {
           console.log("success");
           history.push("/" + initialPage);
         } else {
-          setApiResponseMessage(
-            `${
-              currentApi === "/login"
-                ? "Login failed, please try again"
-                : "Registration failed, please try again"
-            }  `
-          );
+          setApiResponseMessage(response.error);
           setApiResponseType("error");
           setShowSnackBar(true);
         }
