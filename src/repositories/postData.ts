@@ -24,7 +24,6 @@ export default async function postData(
       data = response.data;
       if (url === "/login" || url === "/register") {
         sessionStorage.setItem(ACCESS_TOKEN, response?.headers["x-token"]);
-        sessionStorage.setItem(USER_ID, response.data.id);
       }
       error = null;
     })

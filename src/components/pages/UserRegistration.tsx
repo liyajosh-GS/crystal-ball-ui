@@ -4,15 +4,16 @@ import React from "react";
 import { LoginFormProps } from "../../models/components/organisms/LoginFormProps";
 import LoginForm from "../organisms/login/LoginForm";
 import AuthenticationShell from "../organisms/AuthenticationShell";
+import RegistrationForm from "../organisms/register/RegistrationForm";
 
-const LoginPage: React.FC = () => {
+const UserRegistration: React.FC = () => {
   return (
     <>
-      <AuthenticationShell title="Sign in">
-        <LoginForm />
+      <AuthenticationShell title="Register">
+        <RegistrationForm />
       </AuthenticationShell>
     </>
   );
 };
 
-export default LoginPage;
+export default UserRegistration;

@@ -1,9 +1,21 @@
-import { Grid, Paper, Theme, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Paper,
+  Step,
+  StepLabel,
+  Stepper,
+  Theme,
+  Typography,
+} from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import ProjectCreationForm from "../organisms/projectCreation/ProjectCreationForm";
 import { ACCESS_TOKEN } from "../../constants/constant";
+import AccountDetailsForm from "../organisms/projectCreation/AccountDetailsForm";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,31 +37,57 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProjectCreation: React.FC = () => {
   const classes = useStyles();
 
-  const ifAccessTokenExists = () => {
-    return (
-      sessionStorage.getItem(ACCESS_TOKEN) &&
-      sessionStorage.getItem(ACCESS_TOKEN) !== undefined
-    );
+  const steps = ["Register your Project", "Bank Info"];
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const moveForward = () => {
+    console.log(" moving ");
+    setActiveStep(activeStep + 1);
   };
+
+  function getStepContent(step: number) {
+    switch (step) {
+      case 0:
+        return <ProjectCreationForm onSuccessCallback={moveForward} />;
+      case 1:
+        return <AccountDetailsForm />;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
 
   return (
     <>
-      {ifAccessTokenExists() ? (
-        <div className={classes.root}>
-          <Grid container>
-            <Grid item xs={5}>
+      <Grid container>
+        <Container>
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyItems: "center",
+            }}
+          >
+            <Grid item xs={10} justifyContent="center">
               <Paper elevation={3} className={classes.paper}>
-                <Typography variant="h5" align="left" className={classes.title}>
-                  Register your project!
-                </Typography>
-                <ProjectCreationForm />
+                <Stepper
+                  activeStep={activeStep}
+                  sx={{ pt: 3, pb: 5 }}
+                  alternativeLabel
+                >
+                  {steps.map((label) => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+                <React.Fragment>{getStepContent(activeStep)}</React.Fragment>
               </Paper>
             </Grid>
-          </Grid>
-        </div>
-      ) : (
-        <Redirect push to={"/login/create-project"} />
-      )}
+          </Box>
+        </Container>
+      </Grid>
     </>
   );
 };

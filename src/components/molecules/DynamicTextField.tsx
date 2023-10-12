@@ -9,7 +9,7 @@ import { DynamicTextFieldProps } from "../../models/components/molecules/Dynamic
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     input: {
-      width: "83%",
+      width: "90%",
     },
   })
 );

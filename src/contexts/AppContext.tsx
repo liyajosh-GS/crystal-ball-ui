@@ -4,10 +4,10 @@ import { AppContextProps } from "../models/contexts/AppContextProps";
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState<any>(null);
+  const [redirectBackTo, setRedirectBackTo] = useState<string | null>(null);
 
   return (
-    <AppContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AppContext.Provider value={{ redirectBackTo, setRedirectBackTo }}>
       {children}
     </AppContext.Provider>
   );

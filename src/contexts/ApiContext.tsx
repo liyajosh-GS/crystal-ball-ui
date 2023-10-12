@@ -11,7 +11,7 @@ import { AlertColor } from "@mui/material";
 export const ApiContext = createContext<ApiContextProps | undefined>(undefined);
 
 export function ApiProvider({ children }: { children: ReactNode }) {
-  const [apiConfig, setApiConfig] = useState<{ [key: string]: any }>({});
+  const [apiConfig, setApiConfig] = useState<any>(null);
   const [apiResponseMessage, setApiResponseMessage] = useState<
     string | undefined
   >(undefined);
@@ -19,16 +19,19 @@ export function ApiProvider({ children }: { children: ReactNode }) {
   const [showSnackBar, setShowSnackBar] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch("/apiConfig.json")
-      .then((response) => response.json())
-      .then((data: { [key: string]: any }) => {
-        console.log("data " + data);
-        setApiConfig(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching config.json:", error);
-      });
-  }, []);
+    console.log("triggered");
+    if (apiConfig === null) {
+      fetch("/apiConfig.json")
+        .then((response) => response.json())
+        .then((data: { [key: string]: any }) => {
+          console.log("data " + data);
+          setApiConfig(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching config.json:", error);
+        });
+    }
+  }, [window.location.href]);
 
   return (
     <ApiContext.Provider

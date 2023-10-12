@@ -75,6 +75,9 @@ const ProjectDetailCard: React.FC = () => {
   const [project, setProject] = useState<ProjectCardProps | null>();
 
   useEffect(() => {
+    console.log("projectId " + projectId);
+    console.log("currentApi " + currentApi);
+    console.log("apiConfig " + JSON.stringify(apiConfig));
     if (currentApi?.length > 0) {
       fetchData(currentApi + projectId)
         .then((response) => setProject({ project: response.data }))
@@ -207,15 +210,15 @@ const ProjectDetailCard: React.FC = () => {
                   color="primary.light"
                   display="inline"
                 >
-                  Creators
+                  Group Members
                 </Typography>
               </Grid>
 
               <Grid item xs={6}>
                 <DisplayAndEditText
-                  id="creators"
-                  name="creators"
-                  value={detail?.creators.join()}
+                  id="groupMembers"
+                  name="groupMembers"
+                  value={detail?.groupMembers.join()}
                   disabled={true}
                 />
               </Grid>
