@@ -8,5 +8,6 @@
   "projectDetail": "/projects/",
   "createContribution": "/contributions",
   "login": "/login",
-  "register": "/register"
+  "register": "/register",
+  "bankDetails": "/bank"
 }

@@ -12,7 +12,6 @@ import { ProjectCardProps } from "../../../models/components/organisms/ProjectCa
 import {
   ACCESS_TOKEN,
   LOGIN_PAGE,
-  PROJECT_CATALOG_PAGE_ROUTE,
   PROJECT_DETAIL_PAGE_ROUTE,
 } from "../../../constants/constant";
 import { useAppContext } from "../../../contexts/AppContext";

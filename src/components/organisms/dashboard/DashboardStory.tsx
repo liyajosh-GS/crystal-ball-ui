@@ -51,7 +51,7 @@ const DashboardStory: React.FC = () => {
             <Button variant="contained" onClick={goToProjectCatalog}>
               Browse Project Catalog
             </Button>
-            <Button variant="outlined" onClick={goToCreationPage}>
+            <Button variant="contained" onClick={goToCreationPage}>
               Register new Project
             </Button>
           </Stack>

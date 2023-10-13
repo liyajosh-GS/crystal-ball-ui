@@ -1,10 +1,5 @@
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import { makeStyles, createStyles } from "@mui/styles";
-import { TextField, Theme } from "@mui/material";
+import { TextField } from "@mui/material";
 import { DisplayAndEditTextProps } from "../../models/components/atoms/DisplayAndEditTextProps";
 
 const DisplayAndEditText: React.FC<DisplayAndEditTextProps> = ({

@@ -5,3 +5,10 @@ export interface ProjectCreationRequest {
   targetFund: string;
   groupMembers: string[];
 }
+
+export interface BankDetailRequest {
+  accountNumber: string;
+  code: string;
+  accountHolder: string;
+  projectId: string;
+}

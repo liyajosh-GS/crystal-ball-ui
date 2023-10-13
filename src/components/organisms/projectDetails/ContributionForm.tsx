@@ -16,7 +16,6 @@ import { ContributionRequest } from "../../../models/repositories/ContributionRe
 import {
   ACCESS_TOKEN,
   CREATE_CONTRIBUTION_API_KEY,
-  USER_ID,
 } from "../../../constants/constant";
 
 const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
@@ -43,6 +42,7 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ projectId }) => {
   };
 
   const makeApiRequest = async () => {
+    setOpen(false);
     if (currentApi?.length > 0) {
       let request: ContributionRequest = {
         projectId: projectId,
