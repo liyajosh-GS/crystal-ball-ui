@@ -1,18 +1,17 @@
-import { Box, Button, Grid, Link, TextField, Theme } from "@mui/material";
+import { Box, Button, Grid, Link, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { useApiContext } from "../../../contexts/ApiContext";
-
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   ACCESS_TOKEN,
   LOGIN_API_KEY,
   REGISTER_API_KEY,
 } from "../../../constants/constant";
-import { LoginFormProps } from "../../../models/components/organisms/LoginFormProps";
 import postData from "../../../repositories/postData";
 import { useAppContext } from "../../../contexts/AppContext";
+import InputField from "../../atoms/InputField";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,12 +46,11 @@ const LoginForm: React.FC = () => {
     userName: "",
     password: "",
   });
-  const handleOnChangeInputElement = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    key: string
-  ) => {
+
+  const handleOnChangeInputElement = (value: string, key: string) => {
+    console.log("value " + value);
     let request = { ...userRequest };
-    request = { ...request, [key]: event.target.value };
+    request = { ...request, [key]: value };
     setUserRequest(request);
   };
 
@@ -77,6 +75,7 @@ const LoginForm: React.FC = () => {
 
   const makeApiRequestLogin = async () => {
     let currentApi = api.login;
+    sessionStorage.clear();
     handleApiResponse(currentApi);
   };
 
@@ -84,46 +83,29 @@ const LoginForm: React.FC = () => {
     <React.Fragment>
       <Grid container spacing={3} className={classes.root}>
         <Grid item xs={12}>
-          <TextField
+          <InputField
             required
             id="userName"
-            name="userName"
             label="User Name"
-            fullWidth
             type="userName"
-            autoComplete="given-name"
             variant="outlined"
-            onChange={(event) =>
-              handleOnChangeInputElement(
-                event as ChangeEvent<HTMLInputElement>,
-                "userName"
-              )
-            }
+            onChange={(value) => handleOnChangeInputElement(value, "userName")}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <InputField
             required
             id="password"
-            name="password"
             label="Password"
-            fullWidth
             type="password"
-            autoComplete="family-name"
             variant="outlined"
-            onChange={(event) =>
-              handleOnChangeInputElement(
-                event as ChangeEvent<HTMLInputElement>,
-                "password"
-              )
-            }
+            onChange={(value) => handleOnChangeInputElement(value, "password")}
           />
         </Grid>
       </Grid>
       <Box
         sx={{
           display: "block",
-          justifyContent: "flex-end",
           paddingLeft: "24px",
           paddingRight: "24px",
         }}

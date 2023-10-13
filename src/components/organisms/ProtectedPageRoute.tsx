@@ -1,8 +1,7 @@
-import { Grid, Paper, Theme, Typography } from "@mui/material";
+import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
 import { Redirect } from "react-router-dom";
-import ProjectCreationForm from "../organisms/projectCreation/ProjectCreationForm";
 import { ACCESS_TOKEN } from "../../constants/constant";
 import { ProtectedRouteProps } from "../../models/components/pages/ProtectedRouteProps";
 import { useAppContext } from "../../contexts/AppContext";

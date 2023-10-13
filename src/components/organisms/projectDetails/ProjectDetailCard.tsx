@@ -75,9 +75,6 @@ const ProjectDetailCard: React.FC = () => {
   const [project, setProject] = useState<ProjectCardProps | null>();
 
   useEffect(() => {
-    console.log("projectId " + projectId);
-    console.log("currentApi " + currentApi);
-    console.log("apiConfig " + JSON.stringify(apiConfig));
     if (currentApi?.length > 0) {
       fetchData(currentApi + projectId)
         .then((response) => setProject({ project: response.data }))

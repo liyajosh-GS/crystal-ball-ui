@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Theme, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
 import React, { ChangeEvent, useState } from "react";
@@ -6,8 +6,6 @@ import { useHistory } from "react-router-dom";
 import {
   ACCESS_TOKEN,
   CREATE_PROJECT_API_KEY,
-  PROJECT_CATALOG_PAGE_ROUTE,
-  USER_ID,
 } from "../../../constants/constant";
 import { useApiContext } from "../../../contexts/ApiContext";
 import { ProjectCreationRequest } from "../../../models/repositories/ProjectCreationRequestProps";
@@ -50,6 +48,7 @@ const dropdownOptions = [
 
 const ProjectCreationForm: React.FC<StepperControlProps> = ({
   onSuccessCallback,
+  setSharedResources,
 }) => {
   const classes = useStyles();
 
@@ -97,6 +96,7 @@ const ProjectCreationForm: React.FC<StepperControlProps> = ({
         (response) => {
           if (response.error === null) {
             onSuccessCallback();
+            setSharedResources({ projectId: response.data.id });
             // history.push(PROJECT_CATALOG_PAGE_ROUTE);
           } else {
             setApiResponseMessage("Could not create project try again");

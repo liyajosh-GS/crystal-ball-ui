@@ -1,9 +1,9 @@
-import { Box, Button, Grid, Link, TextField, Theme } from "@mui/material";
+import { Box, Button, Grid, TextField, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
 import React, { ChangeEvent, useState } from "react";
 import { useApiContext } from "../../../contexts/ApiContext";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   ACCESS_TOKEN,
   LOGIN_API_KEY,
@@ -77,6 +77,7 @@ const RegistrationForm: React.FC = () => {
 
   const makeApiRequestRegister = async () => {
     let currentApi = api.register;
+    sessionStorage.clear();
     handleApiResponse(currentApi);
   };
 

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Grid,
   Paper,
@@ -8,13 +7,10 @@ import {
   StepLabel,
   Stepper,
   Theme,
-  Typography,
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import React from "react";
-import { Redirect } from "react-router-dom";
 import ProjectCreationForm from "../organisms/projectCreation/ProjectCreationForm";
-import { ACCESS_TOKEN } from "../../constants/constant";
 import AccountDetailsForm from "../organisms/projectCreation/AccountDetailsForm";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,6 +35,9 @@ const ProjectCreation: React.FC = () => {
 
   const steps = ["Register your Project", "Bank Info"];
   const [activeStep, setActiveStep] = React.useState(0);
+  const [sharedResource, setSharedResource] = React.useState<{
+    [key: string]: string;
+  }>({});
 
   const moveForward = () => {
     console.log(" moving ");
@@ -48,9 +47,21 @@ const ProjectCreation: React.FC = () => {
   function getStepContent(step: number) {
     switch (step) {
       case 0:
-        return <ProjectCreationForm onSuccessCallback={moveForward} />;
+        return (
+          <ProjectCreationForm
+            onSuccessCallback={moveForward}
+            sharedResources={sharedResource}
+            setSharedResources={setSharedResource}
+          />
+        );
       case 1:
-        return <AccountDetailsForm />;
+        return (
+          <AccountDetailsForm
+            onSuccessCallback={moveForward}
+            sharedResources={sharedResource}
+            setSharedResources={setSharedResource}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }

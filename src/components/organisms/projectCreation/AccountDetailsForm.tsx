@@ -1,19 +1,17 @@
-import { Box, Button, Grid, TextField, Theme, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
 import React, { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   ACCESS_TOKEN,
-  CREATE_PROJECT_API_KEY,
+  BANK_API_KEY,
   PROJECT_CATALOG_PAGE_ROUTE,
-  USER_ID,
 } from "../../../constants/constant";
 import { useApiContext } from "../../../contexts/ApiContext";
-import { ProjectCreationRequest } from "../../../models/repositories/ProjectCreationRequestProps";
+import { BankDetailRequest } from "../../../models/repositories/ProjectCreationRequestProps";
 import postData from "../../../repositories/postData";
-import SingleSelect from "../../atoms/SingleSelect";
-import DynamicTextFieldForm from "../../molecules/DynamicTextField";
+import { StepperControlProps } from "../../../models/components/organisms/StepperControlProps";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,75 +30,60 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const dropdownOptions = [
-  {
-    label: "Software",
-    value: "SOFTWARE",
-  },
-  {
-    label: "GreenTechnology",
-    value: "GREEN_TECHNOLOGY",
-  },
-  {
-    label: "Medical",
-    value: "MEDICAL",
-  },
-];
-
-const AccountDetailsForm: React.FC = () => {
+const AccountDetailsForm: React.FC<StepperControlProps> = ({
+  sharedResources,
+}) => {
   const classes = useStyles();
 
   const { apiConfig } = useApiContext();
-  const currentApi: string = _.get(apiConfig, CREATE_PROJECT_API_KEY);
+  const currentApi: string = _.get(apiConfig, BANK_API_KEY);
   const history = useHistory();
   const { setShowSnackBar, setApiResponseType, setApiResponseMessage } =
     useApiContext();
 
-  const [projectRequest, setProjectRequest] = useState<ProjectCreationRequest>({
-    name: "",
-    description: "",
-    projectType: "",
-    targetFund: "",
-    groupMembers: [],
-  });
+  const [bankDetailsRequest, setBankDetailsRequest] =
+    useState<BankDetailRequest>({
+      accountHolder: "",
+      accountNumber: "",
+      code: "",
+      projectId: sharedResources.projectId,
+    });
+  const [isError, setIsError] = useState<boolean>(false);
 
   const handleOnChangeInputElement = (
     event: React.ChangeEvent<HTMLInputElement>,
     key: string
   ) => {
-    let request = { ...projectRequest };
+    let request = { ...bankDetailsRequest };
     request = { ...request, [key]: event.target.value };
-    setProjectRequest(request);
-  };
-
-  const handleOnChangeForProjectType = (value: string) => {
-    let request = { ...projectRequest };
-    request = { ...request, projectType: value };
-    setProjectRequest(request);
-  };
-
-  const handleOnChangeForCreators = (value: string[]) => {
-    let request = { ...projectRequest };
-    request = { ...request, groupMembers: value };
-    setProjectRequest(request);
+    setBankDetailsRequest(request);
   };
 
   const makeApiRequest = async () => {
     if (currentApi?.length > 0) {
       let request = {
-        ...projectRequest,
+        ...bankDetailsRequest,
       };
       postData(currentApi, request, sessionStorage.getItem(ACCESS_TOKEN)).then(
         (response) => {
           if (response.error === null) {
             history.push(PROJECT_CATALOG_PAGE_ROUTE);
           } else {
-            setApiResponseMessage("Could not create project try again");
+            setApiResponseMessage("Could not save bank details, try again");
             setApiResponseType("error");
             setShowSnackBar(true);
           }
         }
       );
+    }
+  };
+
+  const validateReEntered = (value: string) => {
+    let accountNumber = bankDetailsRequest.accountNumber;
+    if (value !== accountNumber) {
+      setIsError(true);
+    } else {
+      setIsError(false);
     }
   };
 
@@ -113,8 +96,8 @@ const AccountDetailsForm: React.FC = () => {
         <Grid item xs={12}>
           <TextField
             required
-            id="account"
-            name="account"
+            id="accountNumber"
+            name="accountNumber"
             label="Bank Account Number"
             fullWidth
             autoComplete="given-name"
@@ -122,7 +105,7 @@ const AccountDetailsForm: React.FC = () => {
             onChange={(event) =>
               handleOnChangeInputElement(
                 event as ChangeEvent<HTMLInputElement>,
-                "account"
+                "accountNumber"
               )
             }
           />
@@ -130,18 +113,15 @@ const AccountDetailsForm: React.FC = () => {
         <Grid item xs={12}>
           <TextField
             required
+            error={isError}
             id="re-account"
             name="re-account"
             label="Re-enter Account Number"
             fullWidth
-            autoComplete="family-name"
+            type="password"
             variant="outlined"
-            onChange={(event) =>
-              handleOnChangeInputElement(
-                event as ChangeEvent<HTMLInputElement>,
-                "re-account"
-              )
-            }
+            helperText={isError && "Numbers do not match"}
+            onBlur={(event) => validateReEntered(event.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -169,7 +149,7 @@ const AccountDetailsForm: React.FC = () => {
             onChange={(event) =>
               handleOnChangeInputElement(
                 event as ChangeEvent<HTMLInputElement>,
-                "accountHolderName"
+                "accountHolder"
               )
             }
           />

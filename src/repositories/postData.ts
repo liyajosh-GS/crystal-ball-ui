@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { ACCESS_TOKEN, USER_ID } from "../constants/constant";
+import { ACCESS_TOKEN } from "../constants/constant";
 
 export default async function postData(
   url: string,

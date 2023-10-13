@@ -1,16 +1,18 @@
-import Dashboard from "./Dashboard";
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 import ProjectCreation from "./ProjectCreation";
-import Projects from "./Projects";
-import ProjectDetailPage from "./ProjectDetailPage";
-import LoginPage from "./LoginPage";
 import {
   CREATE_PAGE_ROUTE,
   PROJECT_CATALOG_PAGE_ROUTE,
 } from "../../constants/constant";
-import UserRegistration from "./UserRegistration";
-import ProtectedRoute from "../organisms/ProtectedPageRoute";
+import Dashboard from "./Dashboard";
+import CircularLoader from "../atoms/CircularLoader";
+
+const Projects = lazy(() => import("./Projects"));
+const ProjectDetailPage = lazy(() => import("./ProjectDetailPage"));
+const LoginPage = lazy(() => import("./LoginPage"));
+const UserRegistration = lazy(() => import("./UserRegistration"));
+const ProtectedRoute = lazy(() => import("../organisms/ProtectedPageRoute"));
 
 const Pages: React.FC = () => {
   return (
@@ -20,22 +22,32 @@ const Pages: React.FC = () => {
           <Dashboard />
         </Route>
         <Route exact path={PROJECT_CATALOG_PAGE_ROUTE}>
-          <Projects />
+          <Suspense fallback={<CircularLoader />}>
+            <Projects />
+          </Suspense>
         </Route>
         <Route path="/projects-detail-page/:projectId">
-          <ProjectDetailPage />
+          <Suspense fallback={<CircularLoader />}>
+            <ProjectDetailPage />
+          </Suspense>
         </Route>
         <Route exact path={"/login"}>
-          <LoginPage />
+          <Suspense fallback={<CircularLoader />}>
+            <LoginPage />
+          </Suspense>
         </Route>
         <Route exact path={"/registration"}>
-          <UserRegistration />
+          <Suspense fallback={<CircularLoader />}>
+            <UserRegistration />
+          </Suspense>
         </Route>
         <Route path={CREATE_PAGE_ROUTE}>
-          <ProtectedRoute
-            children={<ProjectCreation />}
-            redirectBackUrl={CREATE_PAGE_ROUTE}
-          />
+          <Suspense fallback={<CircularLoader />}>
+            <ProtectedRoute
+              children={<ProjectCreation />}
+              redirectBackUrl={CREATE_PAGE_ROUTE}
+            />
+          </Suspense>
         </Route>
       </Switch>
     </>
