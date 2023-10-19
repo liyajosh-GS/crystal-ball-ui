@@ -66,7 +66,7 @@ const DynamicTextFieldForm: React.FC<DynamicTextFieldProps> = ({
           <IconButton
             color="secondary"
             onClick={addInput}
-            aria-label="Remove input"
+            aria-label="Add input"
           >
             <PlusIcon />
           </IconButton>

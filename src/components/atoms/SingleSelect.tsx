@@ -51,6 +51,7 @@ const SingleSelect: React.FC<SingleSelectProps> = ({
           defaultValue={defaultValue}
           className={classes.input}
           disabled={disabled}
+          inputProps={{ "data-testid": "single-select" }}
         >
           {getOptions()}
         </Select>

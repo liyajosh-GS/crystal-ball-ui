@@ -81,5 +81,17 @@
     "react-mock-router": "^1.0.15",
     "react-test-renderer": "^18.2.0",
     "resize-observer-polyfill": "^1.5.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    },
+    "coveragePathIgnorePatterns": [
+      "src/models",
+      "src/constants",
+      "src/App.tsx",
+      "src/index.tsx",
+      "src/reportWebVitals.ts"
+    ]
   }
 }

@@ -15,6 +15,7 @@ const InputField: React.FC<InputFieldProps> = React.memo(
           type={type}
           variant={variant}
           onChange={(event) => onChange(event.target.value)}
+          inputProps={{ "data-testid": "input-field" }}
         />
       </>
     );

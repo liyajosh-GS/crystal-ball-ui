@@ -2,7 +2,6 @@ import { Box, Button, Grid, TextField, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import _ from "lodash";
 import React, { ChangeEvent, useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   ACCESS_TOKEN,
   CREATE_PROJECT_API_KEY,
@@ -54,7 +53,6 @@ const ProjectCreationForm: React.FC<StepperControlProps> = ({
 
   const { apiConfig } = useApiContext();
   const currentApi: string = _.get(apiConfig, CREATE_PROJECT_API_KEY);
-  const history = useHistory();
   const { setShowSnackBar, setApiResponseType, setApiResponseMessage } =
     useApiContext();
 

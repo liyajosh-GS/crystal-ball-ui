@@ -113,7 +113,7 @@ const LoginForm: React.FC = () => {
         <Button fullWidth variant="contained" onClick={makeApiRequestLogin}>
           Login
         </Button>
-        <Link href="/registration" variant="body2">
+        <Link href="/registration" variant="body2" data-testid="goToRegister">
           {"Don't have an account? Register"}
         </Link>
       </Box>
