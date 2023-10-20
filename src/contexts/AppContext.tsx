@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { AppContextProps } from "../models/contexts/AppContextProps";
 
-const AppContext = createContext<AppContextProps | undefined>(undefined);
+export const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [redirectBackTo, setRedirectBackTo] = useState<string | null>(null);

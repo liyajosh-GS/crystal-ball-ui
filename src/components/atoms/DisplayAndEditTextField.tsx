@@ -24,7 +24,7 @@ const DisplayAndEditText: React.FC<DisplayAndEditTextProps> = ({
         sx={{
           marginTop: "24px",
         }}
-        //InputProps={{ disableUnderline: true }}
+        inputProps={{ "data-testid": "display-edit-text" }}
       />
     </>
   );

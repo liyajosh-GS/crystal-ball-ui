@@ -162,6 +162,7 @@ const AccountDetailsForm: React.FC<StepperControlProps> = ({
           className={classes.button}
           variant="contained"
           onClick={makeApiRequest}
+          data-testid="saveBankInfo"
         >
           Save Bank Info
         </Button>

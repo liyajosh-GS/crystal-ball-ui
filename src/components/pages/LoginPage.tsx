@@ -5,8 +5,8 @@ import AuthenticationShell from "../organisms/AuthenticationShell";
 const LoginPage: React.FC = () => {
   return (
     <>
-      <AuthenticationShell title="Sign in">
-        <LoginForm />
+      <AuthenticationShell title="Sign in" data-testid="authentication-shell">
+        <LoginForm data-testid="login-form" />
       </AuthenticationShell>
     </>
   );

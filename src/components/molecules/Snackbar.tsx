@@ -1,23 +1,8 @@
-import { Alert, Snackbar, SnackbarContent, Theme } from "@mui/material";
-import React, { useContext } from "react";
-import { ApiContext, useApiContext } from "../../contexts/ApiContext";
-import { makeStyles, createStyles } from "@mui/styles";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  success: {
-    backgroundColor: theme.palette.success.main,
-  },
-  error: {
-    backgroundColor: theme.palette.error.main,
-  },
-  message: {
-    display: "flex",
-    alignItems: "center",
-  },
-}));
+import { Alert, Snackbar } from "@mui/material";
+import React from "react";
+import { useApiContext } from "../../contexts/ApiContext";
 
 function SnackbarComponent() {
-  const classes = useStyles();
   const { apiResponseMessage, apiResponseType, showSnackBar, setShowSnackBar } =
     useApiContext();
 
@@ -41,11 +26,13 @@ function SnackbarComponent() {
       open={showSnackBar}
       autoHideDuration={3000}
       onClose={handleClose}
+      data-testid="snackbar"
     >
       <Alert
         onClose={handleClose}
         severity={apiResponseType}
         sx={{ width: "100%" }}
+        data-testid="alert"
       >
         {apiResponseMessage}
       </Alert>
